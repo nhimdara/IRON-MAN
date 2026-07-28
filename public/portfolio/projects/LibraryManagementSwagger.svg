@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Library Management API Swagger interface</title>
+  <desc id="desc">A stylized preview of the Swagger UI showing the library management API endpoints.</desc>
+  <rect width="1600" height="1000" fill="#f7f7f7"/>
+  <rect width="1600" height="86" fill="#1b1b1b"/>
+  <circle cx="115" cy="43" r="25" fill="#85ea2d"/>
+  <text x="153" y="54" fill="#fff" font-family="Arial, sans-serif" font-size="31">Swagger</text>
+  <rect x="460" y="21" width="765" height="44" rx="3" fill="#fff" stroke="#62a03a" stroke-width="3"/>
+  <text x="479" y="51" fill="#222" font-family="Arial, sans-serif" font-size="20">/v3/api-docs</text>
+  <rect x="1225" y="21" width="145" height="44" rx="3" fill="#5b9f36"/>
+  <text x="1261" y="51" fill="#fff" font-family="Arial, sans-serif" font-size="20" font-weight="700">Explore</text>
+  <text x="120" y="174" fill="#2d3748" font-family="Arial, sans-serif" font-size="46" font-weight="700">Library Management API</text>
+  <rect x="685" y="141" width="74" height="28" rx="14" fill="#8490a3"/>
+  <text x="700" y="161" fill="#fff" font-family="Arial, sans-serif" font-size="16" font-weight="700">1.0.0</text>
+  <rect x="770" y="141" width="80" height="28" rx="14" fill="#7fc900"/>
+  <text x="784" y="161" fill="#fff" font-family="Arial, sans-serif" font-size="16" font-weight="700">OAS 3.0</text>
+  <text x="120" y="222" fill="#222" font-family="Arial, sans-serif" font-size="20">Interactive documentation for managing books, students, admins, and borrowing.</text>
+  <line x1="0" y1="310" x2="1600" y2="310" stroke="#ddd"/>
+  <text x="120" y="382" fill="#283744" font-family="Arial, sans-serif" font-size="34" font-weight="700">Admins</text>
+  <g font-family="Arial, sans-serif" font-size="19">
+    <rect x="120" y="415" width="1360" height="62" rx="5" fill="#f9e7e7" stroke="#f44"/>
+    <rect x="130" y="425" width="92" height="42" rx="4" fill="#f33"/><text x="146" y="453" fill="#fff" font-weight="700">DELETE</text>
+    <text x="245" y="453" fill="#222" font-weight="700">/api/admins/{id}</text>
+    <rect x="120" y="490" width="1360" height="62" rx="5" fill="#e6f1fb" stroke="#5baaf7"/>
+    <rect x="130" y="500" width="92" height="42" rx="4" fill="#55a7f5"/><text x="155" y="528" fill="#fff" font-weight="700">GET</text>
+    <text x="245" y="528" fill="#222" font-weight="700">/api/admins/{id}</text>
+    <rect x="120" y="565" width="1360" height="62" rx="5" fill="#e6f8ed" stroke="#49cc90"/>
+    <rect x="130" y="575" width="92" height="42" rx="4" fill="#49cc90"/><text x="148" y="603" fill="#fff" font-weight="700">POST</text>
+    <text x="245" y="603" fill="#222" font-weight="700">/api/admins</text>
+  </g>
+  <text x="120" y="704" fill="#283744" font-family="Arial, sans-serif" font-size="34" font-weight="700">Authentication</text>
+  <rect x="120" y="735" width="1360" height="62" rx="5" fill="#e6f8ed" stroke="#49cc90"/>
+  <rect x="130" y="745" width="92" height="42" rx="4" fill="#49cc90"/>
+  <text x="148" y="773" fill="#fff" font-family="Arial, sans-serif" font-size="19" font-weight="700">POST</text>
+  <text x="245" y="773" fill="#222" font-family="Arial, sans-serif" font-size="19" font-weight="700">/api/auth/login</text>
+  <text x="120" y="880" fill="#283744" font-family="Arial, sans-serif" font-size="34" font-weight="700">Books · Students · Borrowing</text>
+</svg>

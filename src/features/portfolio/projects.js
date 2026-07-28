@@ -10,7 +10,8 @@ export const projects = [
     year: "2026",
     liveUrl: "https://frontend-project-practicum-e-learni.vercel.app/",
     backendUrl: "https://backend-project-practicum-elearning.onrender.com/api",
-    githubUrl: "https://github.com/nhimdara/Frontend-Project-Practicum-ELearning",
+    githubUrl:
+      "https://github.com/nhimdara/Frontend-Project-Practicum-ELearning",
     githubLabel: "Frontend",
     backendGithubUrl:
       "https://github.com/nhimdara/Backend-Project-Practicum-ELearning",
@@ -85,8 +86,7 @@ export const projects = [
     backendUrl: "https://backend-hotel-booking-5.onrender.com/api",
     githubUrl: "https://github.com/nhimdara/Frontend_Hotel_Booking",
     githubLabel: "Frontend",
-    backendGithubUrl:
-      "https://github.com/nhimdara/Backend_Hotel_Booking",
+    backendGithubUrl: "https://github.com/nhimdara/Backend_Hotel_Booking",
     featured: true,
   },
   {
@@ -106,6 +106,19 @@ export const projects = [
   },
   {
     id: 8,
+    title: "Library Management API",
+    image: "/portfolio/projects/LibraryManagementSwagger.svg",
+    description:
+      "A Spring Boot REST API for managing books, students, administrators, and borrowing workflows, with MySQL persistence, validation, migrations, and interactive Swagger documentation.",
+    tech: ["Spring Boot", "Java 21", "MySQL", "JPA", "Swagger"],
+    category: "Backend",
+    year: "2026",
+    liveUrl: "https://api-production-f2f5.up.railway.app/swagger-ui/index.html",
+    githubUrl: "https://github.com/nhimdara/Library_managment_Spring_Boot",
+    featured: true,
+  },
+  {
+    id: 9,
     title: "Portfolio Website",
     image: "/portfolio/projects/Portfolio.png",
     description:
