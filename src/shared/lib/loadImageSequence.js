@@ -1,19 +1,11 @@
-type SequenceOptions = {
-  count: number;
-  path: (index: number) => string;
-  onFirstFrame?: () => void;
-  onProgress?: (progress: number) => void;
-  concurrency?: number;
-};
-
 export function loadImageSequence({
   count,
   path,
   onFirstFrame,
   onProgress,
   concurrency = 6,
-}: SequenceOptions) {
-  const images = Array<HTMLImageElement>(count);
+}) {
+  const images = Array(count);
   let cancelled = false;
   let nextIndex = 0;
   let completed = 0;

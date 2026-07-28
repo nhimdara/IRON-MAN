@@ -1,18 +1,9 @@
 export const FRAME_COUNT = 169;
 
-export const framePath = (n: number) =>
+export const framePath = (n) =>
   `/frames/frame_${String(n).padStart(4, "0")}.jpg`;
 
-export type Dialogue = {
-  id: string;
-  show: number;
-  hide: number;
-  quote: string;
-  speaker: string;
-  film: string;
-};
-
-export const DIALOGUES: Dialogue[] = [
+export const DIALOGUES = [
   {
     id: "d1",
     show: 0.1,

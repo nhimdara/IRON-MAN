@@ -1,16 +1,24 @@
 import js from "@eslint/js";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default [
   { ignores: ["dist/**", ".next/**", "node_modules/**"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ["**/*.{ts,tsx}"],
+    ...js.configs.recommended,
+    files: ["**/*.{js,jsx,mjs}"],
     languageOptions: {
       ecmaVersion: 2022,
-      globals: { window: "readonly", document: "readonly" },
+      parserOptions: { ecmaVersion: "latest", sourceType: "module", ecmaFeatures: { jsx: true } },
+      globals: {
+        console: "readonly",
+        document: "readonly",
+        Image: "readonly",
+        IntersectionObserver: "readonly",
+        requestAnimationFrame: "readonly",
+        cancelAnimationFrame: "readonly",
+        window: "readonly",
+      },
     },
     plugins: {
       "react-hooks": reactHooks,
@@ -24,4 +32,4 @@ export default tseslint.config(
       ],
     },
   },
-);
+];

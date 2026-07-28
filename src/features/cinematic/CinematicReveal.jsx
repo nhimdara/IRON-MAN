@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { loadImageSequence } from "@/lib/loadImageSequence";
+import { loadImageSequence } from "@/shared/lib/loadImageSequence";
 
 const FRAME_COUNT = 169;
-const framePath = (index: number) =>
+const framePath = (index) =>
   `/frames2/frame_${String(index + 1).padStart(4, "0")}.jpg`;
 
 const phases = [
@@ -33,16 +33,16 @@ const phases = [
 ];
 
 export function CinematicReveal() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const sectionRef = useRef(null);
+  const canvasRef = useRef(null);
+  const imagesRef = useRef([]);
   const lastFrameRef = useRef(-1);
   const tickingRef = useRef(false);
   const [activePhase, setActivePhase] = useState(-1);
   const [loadProgress, setLoadProgress] = useState(0);
   const [shouldLoad, setShouldLoad] = useState(false);
 
-  const draw = useCallback((index: number) => {
+  const draw = useCallback((index) => {
     const canvas = canvasRef.current;
     const image = imagesRef.current[index];
     if (!canvas || !image?.complete || !image.naturalWidth) return;

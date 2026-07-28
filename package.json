@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --configLoader runner",
-    "build": "tsc -b && vite build --configLoader runner",
+    "build": "vite build --configLoader runner",
     "preview": "vite preview --configLoader runner",
     "lint": "eslint ."
   },
@@ -18,15 +18,10 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@vitejs/plugin-react": "^5.0.4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "typescript-eslint": "^8.46.1",
     "vite": "^7.1.9"
   }
 }

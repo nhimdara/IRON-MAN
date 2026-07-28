@@ -1,10 +1,8 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 
-type Props = { children: React.ReactNode };
-
-export function SmoothScrollProvider({ children }: Props) {
-  const lenisRef = useRef<Lenis | null>(null);
+export function SmoothScrollProvider({ children }) {
+  const lenisRef = useRef(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -18,8 +16,8 @@ export function SmoothScrollProvider({ children }: Props) {
     });
     lenisRef.current = lenis;
 
-    let rafId: number | null = null;
-    const raf = (time: number) => {
+    let rafId = null;
+    const raf = (time) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     };

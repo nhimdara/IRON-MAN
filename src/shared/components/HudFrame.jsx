@@ -1,11 +1,5 @@
-type Props = {
-  corner: "tl" | "tr" | "bl" | "br";
-  size?: number;
-  className?: string;
-};
-
-export function HudFrame({ corner, size = 22, className = "" }: Props) {
-  const paths: Record<Props["corner"], string> = {
+export function HudFrame({ corner, size = 22, className = "" }) {
+  const paths = {
     tl: `M 2 ${size} L 2 2 L ${size} 2`,
     tr: `M ${size - 20} 2 L ${size} 2 L ${size} ${size}`,
     bl: `M 2 ${size - 20} L 2 ${size} L ${size} ${size}`,

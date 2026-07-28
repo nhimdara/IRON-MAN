@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { loadImageSequence } from "@/lib/loadImageSequence";
+import { loadImageSequence } from "@/shared/lib/loadImageSequence";
 
 const FRAME_COUNT = 169;
-const framePath = (index: number) =>
+const framePath = (index) =>
   `/frames/frame_${String(index + 1).padStart(4, "0")}.jpg`;
 
 export function IronManBackgroundSequence() {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const framesRef = useRef<HTMLImageElement[]>([]);
+  const rootRef = useRef(null);
+  const canvasRef = useRef(null);
+  const framesRef = useRef([]);
   const lastFrameRef = useRef(-1);
   const tickingRef = useRef(false);
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const drawFrame = useCallback((index: number) => {
+  const drawFrame = useCallback((index) => {
     const canvas = canvasRef.current;
     const image = framesRef.current[index];
     if (!canvas || !image?.complete || !image.naturalWidth) return;

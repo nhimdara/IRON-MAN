@@ -4,7 +4,7 @@ import {
   GithubLogo,
   MapPin,
 } from "@phosphor-icons/react";
-import { IronManBackgroundSequence } from "@/components/ui/IronManBackgroundSequence";
+import { IronManBackgroundSequence } from "@/features/hero/IronManBackgroundSequence";
 
 export function Hero() {
   return (

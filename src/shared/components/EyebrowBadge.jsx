@@ -1,6 +1,4 @@
-type Props = { children: React.ReactNode; className?: string };
-
-export function EyebrowBadge({ children, className = "" }: Props) {
+export function EyebrowBadge({ children, className = "" }) {
   return (
     <span
       className={`inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-accent backdrop-blur-md ${className}`}

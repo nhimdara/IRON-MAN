@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "@phosphor-icons/react";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
-import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
+import { EyebrowBadge } from "@/shared/components/EyebrowBadge";
+import { AnimatedItem, AnimatedSection } from "@/shared/components/AnimatedSection";
 
 const telemetry = [
   { label: "Featured projects", value: "07+", note: "Web, mobile, and full-stack products" },

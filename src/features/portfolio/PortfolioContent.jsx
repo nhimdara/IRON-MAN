@@ -1,6 +1,6 @@
 import { ArrowUpRight, DownloadSimple } from "@phosphor-icons/react";
-import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
+import { AnimatedItem, AnimatedSection } from "@/shared/components/AnimatedSection";
+import { EyebrowBadge } from "@/shared/components/EyebrowBadge";
 
 const projects = [
   [
@@ -40,7 +40,7 @@ const projects = [
     "Movie search, genre filters, watchlists, authentication, and themes.",
     "/portfolio/projects/CineVault.webp",
     "React 19 · Vite · CSS",
-    "",
+    "https://movie-website-wct.vercel.app/",
     "https://github.com/nhimdara/Movie-Website-WCT",
   ],
   [

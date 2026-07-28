@@ -1,12 +1,11 @@
-import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 
-const containerVariants: Variants = {
+const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 };
 
-const itemVariants: Variants = {
+const itemVariants = {
   hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
@@ -15,9 +14,7 @@ const itemVariants: Variants = {
   },
 };
 
-type SectionProps = { children: ReactNode; className?: string };
-
-export function AnimatedSection({ children, className = "" }: SectionProps) {
+export function AnimatedSection({ children, className = "" }) {
   return (
     <motion.div
       className={className}
@@ -31,7 +28,7 @@ export function AnimatedSection({ children, className = "" }: SectionProps) {
   );
 }
 
-export function AnimatedItem({ children, className = "" }: SectionProps) {
+export function AnimatedItem({ children, className = "" }) {
   return (
     <motion.div className={className} variants={itemVariants}>
       {children}
