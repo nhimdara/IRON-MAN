@@ -245,6 +245,7 @@ export function PortfolioContent() {
                         src={image}
                         alt={`${title} preview`}
                         loading={i === 0 ? "eager" : "lazy"}
+                        decoding="async"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="project-image-overlay" />
@@ -392,6 +393,7 @@ export function PortfolioContent() {
                       src={image}
                       alt={title}
                       loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]"
                     />
                     <div className="credential-open">

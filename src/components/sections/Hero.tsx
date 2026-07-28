@@ -57,6 +57,8 @@ export function Hero() {
             <img
               src="/portfolio/profile.jpg"
               alt=""
+              decoding="async"
+              fetchPriority="high"
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="hero-portrait-shade" />

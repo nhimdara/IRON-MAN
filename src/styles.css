@@ -58,6 +58,7 @@ body > :not(.background-fx):not(.site-navbar) { position: relative; z-index: 1; 
 
 html { scroll-behavior: smooth; }
 .section-shell { position: relative; padding: 7rem 1.5rem; border-top: 1px solid rgba(255,255,255,.06); background: rgba(8,9,11,.76); backdrop-filter: blur(3px); }
+.section-shell { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 .section-grid { max-width: 1400px; margin-inline: auto; display: grid; gap: 5rem; grid-template-columns: minmax(0,4fr) minmax(0,5fr); }
 .section-title { font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 600; line-height: .98; letter-spacing: -.055em; }
 .section-copy { color: #a1a1aa; font-size: 1rem; line-height: 1.8; }
@@ -562,6 +563,8 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion:reduce) {
   .hero-marquee div,.background-fx__aurora,.background-fx__beam,.hud-reticle { animation: none; }
+  html { scroll-behavior: auto; }
+  *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 
 .card-surface {

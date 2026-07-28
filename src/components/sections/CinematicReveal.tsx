@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { loadImageSequence } from "@/lib/loadImageSequence";
 
 const FRAME_COUNT = 169;
 const framePath = (index: number) =>
@@ -39,6 +40,7 @@ export function CinematicReveal() {
   const tickingRef = useRef(false);
   const [activePhase, setActivePhase] = useState(-1);
   const [loadProgress, setLoadProgress] = useState(0);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   const draw = useCallback((index: number) => {
     const canvas = canvasRef.current;
@@ -70,30 +72,39 @@ export function CinematicReveal() {
   }, [draw]);
 
   useEffect(() => {
-    let cancelled = false;
-    let loaded = 0;
-    imagesRef.current = Array.from({ length: FRAME_COUNT }, (_, index) => {
-      const image = new window.Image();
-      image.decoding = "async";
-      image.src = framePath(index);
-      const complete = () => {
-        if (cancelled) return;
-        loaded += 1;
-        setLoadProgress(loaded / FRAME_COUNT);
-        if (index === 0) {
-          lastFrameRef.current = 0;
-          draw(0);
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
         }
-      };
-      image.onload = complete;
-      image.onerror = complete;
-      return image;
+      },
+      { rootMargin: "100% 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    const sequence = loadImageSequence({
+      count: FRAME_COUNT,
+      path: framePath,
+      onProgress: setLoadProgress,
+      onFirstFrame: () => {
+        lastFrameRef.current = 0;
+        draw(0);
+      },
     });
+    imagesRef.current = sequence.images;
+
     return () => {
-      cancelled = true;
+      sequence.cancel();
       imagesRef.current = [];
     };
-  }, [draw]);
+  }, [draw, shouldLoad]);
 
   useEffect(() => {
     resize();
@@ -134,6 +145,12 @@ export function CinematicReveal() {
   return (
     <section ref={sectionRef} className="process-sequence">
       <div className="process-stage">
+        <img
+          src="/frames2/frame_0001.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
         <div className="process-mask" />
 
@@ -160,7 +177,7 @@ export function CinematicReveal() {
           ))}
         </div>
 
-        {loadProgress < 1 && (
+        {shouldLoad && loadProgress < 1 && (
           <div className="process-loading">
             <span style={{ transform: `scaleX(${loadProgress})` }} />
           </div>

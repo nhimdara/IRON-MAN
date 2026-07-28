@@ -7,6 +7,8 @@ export function SmoothScrollProvider({ children }: Props) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const lenis = new Lenis({
       lerp: 0.1,
       duration: 1.2,
@@ -16,15 +18,29 @@ export function SmoothScrollProvider({ children }: Props) {
     });
     lenisRef.current = lenis;
 
-    let rafId = 0;
+    let rafId: number | null = null;
     const raf = (time: number) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     };
-    rafId = requestAnimationFrame(raf);
+    const start = () => {
+      if (rafId === null) rafId = requestAnimationFrame(raf);
+    };
+    const stop = () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = null;
+    };
+    const onVisibilityChange = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+
+    start();
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      stop();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       lenis.destroy();
       lenisRef.current = null;
     };

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { loadImageSequence } from "@/lib/loadImageSequence";
 
 const FRAME_COUNT = 169;
 const framePath = (index: number) =>
@@ -51,30 +52,20 @@ export function IronManBackgroundSequence() {
   }, [drawFrame]);
 
   useEffect(() => {
-    let cancelled = false;
-    let loaded = 0;
-
-    framesRef.current = Array.from({ length: FRAME_COUNT }, (_, index) => {
-      const image = new window.Image();
-      image.decoding = "async";
-      image.src = framePath(index);
-      const onComplete = () => {
-        if (cancelled) return;
-        loaded += 1;
-        setProgress(loaded / FRAME_COUNT);
-        if (index === 0) {
-          lastFrameRef.current = 0;
-          drawFrame(0);
-          setReady(true);
-        }
-      };
-      image.onload = onComplete;
-      image.onerror = onComplete;
-      return image;
+    const sequence = loadImageSequence({
+      count: FRAME_COUNT,
+      path: framePath,
+      onProgress: setProgress,
+      onFirstFrame: () => {
+        lastFrameRef.current = 0;
+        drawFrame(0);
+        setReady(true);
+      },
     });
+    framesRef.current = sequence.images;
 
     return () => {
-      cancelled = true;
+      sequence.cancel();
       framesRef.current = [];
     };
   }, [drawFrame]);
