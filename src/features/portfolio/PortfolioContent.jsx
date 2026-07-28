@@ -1,65 +1,7 @@
 import { ArrowUpRight, DownloadSimple } from "@phosphor-icons/react";
 import { AnimatedItem, AnimatedSection } from "@/shared/components/AnimatedSection";
 import { EyebrowBadge } from "@/shared/components/EyebrowBadge";
-
-const projects = [
-  [
-    "Elearning",
-    "Full-stack e-learning platform for RUPP students, teachers, and administrators.",
-    "/portfolio/projects/ProjectElearning.png",
-    "React · Express · MySQL",
-    "https://frontend-project-practicum-e-learni.vercel.app/",
-    "https://github.com/nhimdara/Frontend-Project-Practicum-ELearning",
-  ],
-  [
-    "StayEasy",
-    "Hotel search, wishlists, reservations, secure payments, and management tools.",
-    "/portfolio/projects/StayEasyHotel.png",
-    "Vue 3 · Laravel · Sanctum",
-    "https://frontend-hotel-booking-ten.vercel.app/",
-    "https://github.com/nhimdara/Frontend_Hotel_Booking",
-  ],
-  [
-    "Telegram Shop",
-    "Verified Telegram auth, stock-aware carts, orders, and KHQR payments.",
-    "/portfolio/projects/TelegramShop.png",
-    "React · Laravel · PostgreSQL",
-    "https://t.me/my_shop67_bot/shop_nw",
-    "https://github.com/nhimdara/bot-telegram-test-website",
-  ],
-  [
-    "Culinary Admin",
-    "Restaurant dashboards for sales, orders, inventory, tables, and payments.",
-    "/portfolio/projects/CulinaryAdminPOS.png",
-    "Admin portal · REST API · POS",
-    "https://mpos-seven.vercel.app/",
-    "https://github.com/NalenSrin123/G2_SUN_11_MPOS",
-  ],
-  [
-    "CineVault",
-    "Movie search, genre filters, watchlists, authentication, and themes.",
-    "/portfolio/projects/CineVault.webp",
-    "React 19 · Vite · CSS",
-    "https://movie-website-wct.vercel.app/",
-    "https://github.com/nhimdara/Movie-Website-WCT",
-  ],
-  [
-    "WOOD'S Cambodia",
-    "Android product catalogue with branded discovery and direct contact.",
-    "/portfolio/projects/WoodsAndroid.png",
-    "React · Capacitor · Android",
-    "/portfolio/woods-cambodia.apk",
-    "https://github.com/nhimdara/Wood-s",
-  ],
-  [
-    "Portfolio Website",
-    "This personal portfolio site, built to showcase projects, skills, and experience with smooth scroll animations and a responsive layout.",
-    "/portfolio/projects/Portfolio.png",
-    "React · Tailwind CSS · Vite",
-    "https://my-portfolio69.vercel.app/",
-    "https://github.com/nhimdara/my_portfolio69",
-  ],
-];
+import { projects } from "@/features/portfolio/projects";
 
 const skills = [
   "React.js",
@@ -234,23 +176,25 @@ export function PortfolioContent() {
           </AnimatedItem>
           <div className="project-grid mt-12">
             {projects.map(
-              ([title, description, image, stack, live, source], i) => (
+              (project, i) => (
                 <AnimatedItem
-                  key={title}
+                  key={project.id}
                   className={`project-slot project-slot-${i + 1}`}
                 >
                   <article className="project-card group">
                     <div className="project-image relative aspect-[16/10] overflow-hidden bg-zinc-900">
                       <img
-                        src={image}
-                        alt={`${title} preview`}
+                        src={project.image}
+                        alt={`${project.title} preview`}
                         loading={i === 0 ? "eager" : "lazy"}
                         decoding="async"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="project-image-overlay" />
-                      <span className="project-index">0{i + 1} / 2026</span>
-                      {i === 0 && (
+                      <span className="project-index">
+                        {String(project.id).padStart(2, "0")} / {project.year}
+                      </span>
+                      {project.featured && (
                         <span className="project-featured">
                           Featured case study
                         </span>
@@ -258,29 +202,66 @@ export function PortfolioContent() {
                     </div>
                     <div className="project-content">
                       <p className="font-mono text-[9px] uppercase tracking-[.22em] text-accent">
-                        {stack}
+                        {project.category} · {project.tech.join(" · ")}
                       </p>
-                      <h3 className="mt-2 text-2xl font-semibold">{title}</h3>
+                      <h3 className="mt-2 text-2xl font-semibold">
+                        {project.title}
+                      </h3>
                       <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-400">
-                        {description}
+                        {project.description}
                       </p>
                       <div className="project-actions">
-                        {live && (
+                        {project.liveUrl && (
                           <a
-                            href={live}
+                            href={project.liveUrl}
                             target="_blank"
+                            rel="noreferrer"
                             className="project-link"
                           >
                             View project <ArrowUpRight size={12} />
                           </a>
                         )}
+                        {project.backendUrl && (
+                          <a
+                            href={project.backendUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="project-link"
+                          >
+                            Backend API <ArrowUpRight size={12} />
+                          </a>
+                        )}
+                        {project.apkUrl && (
+                          <a
+                            href={project.apkUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="project-link"
+                          >
+                            Download APK <ArrowUpRight size={12} />
+                          </a>
+                        )}
                         <a
-                          href={source}
+                          href={project.githubUrl}
                           target="_blank"
+                          rel="noreferrer"
                           className="project-link"
                         >
-                          Source code <ArrowUpRight size={12} />
+                          {project.githubLabel
+                            ? `${project.githubLabel} source`
+                            : "Source code"}{" "}
+                          <ArrowUpRight size={12} />
                         </a>
+                        {project.backendGithubUrl && (
+                          <a
+                            href={project.backendGithubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="project-link"
+                          >
+                            Backend source <ArrowUpRight size={12} />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </article>
