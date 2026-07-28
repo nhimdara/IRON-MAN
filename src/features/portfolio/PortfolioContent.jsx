@@ -191,6 +191,7 @@ export function PortfolioContent() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="project-image-overlay" />
+                      <div className="project-scan" aria-hidden="true" />
                       <span className="project-index">
                         {String(project.id).padStart(2, "0")} / {project.year}
                       </span>

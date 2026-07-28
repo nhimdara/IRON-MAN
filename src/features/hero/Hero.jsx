@@ -35,6 +35,12 @@ export function Hero() {
             experiences.
           </p>
 
+          <div className="hero-proof" aria-label="Portfolio highlights">
+            <div><strong>07+</strong><span>Products built</span></div>
+            <div><strong>15+</strong><span>Technologies</span></div>
+            <div><strong>02</strong><span>Years learning</span></div>
+          </div>
+
           <div className="hero-actions">
             <a href="#projects" className="hero-primary">
               Explore my work <ArrowDown size={16} weight="bold" />
@@ -74,6 +80,7 @@ export function Hero() {
           </div>
           <div className="hud-readout hud-readout-one">ARC // 100%</div>
           <div className="hud-readout hud-readout-two">BUILD // 2026</div>
+          <div className="hud-scanline" />
           <div className="hud-corner hud-corner-top" />
           <div className="hud-corner hud-corner-bottom" />
         </div>
