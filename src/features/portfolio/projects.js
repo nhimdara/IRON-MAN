@@ -53,7 +53,7 @@ export const projects = [
     tech: ["React 19", "Vite", "Modular CSS"],
     category: "Frontend",
     year: "2026",
-    liveUrl: null,
+    liveUrl: "https://movie-website-wct.vercel.app/",
     githubUrl: "https://github.com/nhimdara/Movie-Website-WCT",
     featured: false,
   },
