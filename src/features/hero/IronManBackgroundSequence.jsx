@@ -10,13 +10,22 @@ export function IronManBackgroundSequence() {
   const canvasRef = useRef(null);
   const framesRef = useRef([]);
   const lastFrameRef = useRef(-1);
+  const requestedFrameRef = useRef(0);
   const tickingRef = useRef(false);
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const drawFrame = useCallback((index) => {
     const canvas = canvasRef.current;
-    const image = framesRef.current[index];
+    let resolvedIndex = index;
+    let image = framesRef.current[resolvedIndex];
+    while (
+      resolvedIndex > 0 &&
+      (!image?.complete || !image.naturalWidth)
+    ) {
+      resolvedIndex -= 1;
+      image = framesRef.current[resolvedIndex];
+    }
     if (!canvas || !image?.complete || !image.naturalWidth) return;
 
     const context = canvas.getContext("2d");
@@ -45,9 +54,15 @@ export function IronManBackgroundSequence() {
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(window.innerWidth * ratio);
-    canvas.height = Math.round(window.innerHeight * ratio);
+    const ratio = Math.min(
+      window.devicePixelRatio || 1,
+      window.innerWidth < 768 ? 1.25 : 1.5,
+    );
+    const width = Math.round(window.innerWidth * ratio);
+    const height = Math.round(window.innerHeight * ratio);
+    if (canvas.width === width && canvas.height === height) return;
+    canvas.width = width;
+    canvas.height = height;
     drawFrame(Math.max(0, lastFrameRef.current));
   }, [drawFrame]);
 
@@ -60,6 +75,9 @@ export function IronManBackgroundSequence() {
         lastFrameRef.current = 0;
         drawFrame(0);
         setReady(true);
+      },
+      onFrame: (index) => {
+        if (index === requestedFrameRef.current) drawFrame(index);
       },
     });
     framesRef.current = sequence.images;
@@ -91,6 +109,7 @@ export function IronManBackgroundSequence() {
         FRAME_COUNT - 1,
         Math.floor(scrollProgress * FRAME_COUNT),
       );
+      requestedFrameRef.current = index;
 
       if (index !== lastFrameRef.current) {
         lastFrameRef.current = index;
@@ -104,9 +123,24 @@ export function IronManBackgroundSequence() {
       requestAnimationFrame(update);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", onScroll);
+    const root = rootRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.addEventListener("scroll", onScroll, { passive: true });
+          update();
+        } else {
+          window.removeEventListener("scroll", onScroll);
+        }
+      },
+      { rootMargin: "20% 0px" },
+    );
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [drawFrame]);
 
   return (

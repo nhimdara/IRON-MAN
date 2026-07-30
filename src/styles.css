@@ -53,6 +53,7 @@ body {
   overflow-x: hidden;
   isolation: isolate;
 }
+canvas { display: block; }
 ::selection { background: var(--accent); color: #08090b; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 body > :not(.background-fx):not(.site-navbar) { position: relative; z-index: 1; }
@@ -585,6 +586,12 @@ html { scroll-behavior: smooth; }
   .hero-marquee div,.background-fx__aurora,.background-fx__beam,.hud-reticle,.hud-scanline { animation: none; }
   html { scroll-behavior: auto; }
   *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+@media (max-width:768px), (pointer:coarse) {
+  .background-fx__aurora { filter: blur(80px); will-change: auto; }
+  .section-shell { backdrop-filter: none; }
+  .site-navbar { backdrop-filter: blur(12px); }
 }
 
 .card-surface {

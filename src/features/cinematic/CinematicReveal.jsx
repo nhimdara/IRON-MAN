@@ -37,6 +37,7 @@ export function CinematicReveal() {
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
   const lastFrameRef = useRef(-1);
+  const requestedFrameRef = useRef(0);
   const tickingRef = useRef(false);
   const [activePhase, setActivePhase] = useState(-1);
   const [loadProgress, setLoadProgress] = useState(0);
@@ -44,7 +45,15 @@ export function CinematicReveal() {
 
   const draw = useCallback((index) => {
     const canvas = canvasRef.current;
-    const image = imagesRef.current[index];
+    let resolvedIndex = index;
+    let image = imagesRef.current[resolvedIndex];
+    while (
+      resolvedIndex > 0 &&
+      (!image?.complete || !image.naturalWidth)
+    ) {
+      resolvedIndex -= 1;
+      image = imagesRef.current[resolvedIndex];
+    }
     if (!canvas || !image?.complete || !image.naturalWidth) return;
     const context = canvas.getContext("2d");
     if (!context) return;
@@ -65,9 +74,15 @@ export function CinematicReveal() {
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(window.innerWidth * ratio);
-    canvas.height = Math.round(window.innerHeight * ratio);
+    const ratio = Math.min(
+      window.devicePixelRatio || 1,
+      window.innerWidth < 768 ? 1.25 : 1.5,
+    );
+    const width = Math.round(window.innerWidth * ratio);
+    const height = Math.round(window.innerHeight * ratio);
+    if (canvas.width === width && canvas.height === height) return;
+    canvas.width = width;
+    canvas.height = height;
     draw(Math.max(0, lastFrameRef.current));
   }, [draw]);
 
@@ -97,6 +112,9 @@ export function CinematicReveal() {
         lastFrameRef.current = 0;
         draw(0);
       },
+      onFrame: (index) => {
+        if (index === requestedFrameRef.current) draw(index);
+      },
     });
     imagesRef.current = sequence.images;
 
@@ -121,6 +139,7 @@ export function CinematicReveal() {
       const range = section.offsetHeight - window.innerHeight;
       const progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, range)));
       const index = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
+      requestedFrameRef.current = index;
       if (index !== lastFrameRef.current) {
         lastFrameRef.current = index;
         draw(index);
@@ -137,9 +156,24 @@ export function CinematicReveal() {
       tickingRef.current = true;
       requestAnimationFrame(update);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", onScroll);
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.addEventListener("scroll", onScroll, { passive: true });
+          update();
+        } else {
+          window.removeEventListener("scroll", onScroll);
+        }
+      },
+      { rootMargin: "25% 0px" },
+    );
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [draw]);
 
   return (

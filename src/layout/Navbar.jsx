@@ -1,19 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const progressRef = useRef(null);
 
   useEffect(() => {
+    let frameId = null;
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0);
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(() => {
+        frameId = null;
+        const isScrolled = window.scrollY > 40;
+        setScrolled((current) => current === isScrolled ? current : isScrolled);
+        const scrollable =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+        if (progressRef.current) {
+          progressRef.current.style.transform = `scaleX(${progress})`;
+        }
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frameId !== null) cancelAnimationFrame(frameId);
+    };
   }, []);
 
   return (
@@ -82,7 +95,7 @@ export function Navbar() {
         </a>
       </div>
       <div className="nav-progress" aria-hidden="true">
-        <span style={{ transform: `scaleX(${progress / 100})` }} />
+        <span ref={progressRef} />
       </div>
     </header>
   );

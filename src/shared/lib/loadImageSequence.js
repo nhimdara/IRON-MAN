@@ -2,6 +2,7 @@ export function loadImageSequence({
   count,
   path,
   onFirstFrame,
+  onFrame,
   onProgress,
   concurrency = 6,
 }) {
@@ -22,6 +23,7 @@ export function loadImageSequence({
       if (cancelled) return;
       completed += 1;
       if (index === 0 && image.naturalWidth) onFirstFrame?.();
+      if (image.naturalWidth) onFrame?.(index);
       if (completed === count || completed % 5 === 0) {
         onProgress?.(completed / count);
       }
@@ -44,6 +46,7 @@ export function loadImageSequence({
       images.forEach((image) => {
         image.onload = null;
         image.onerror = null;
+        image.src = "";
       });
     },
   };
