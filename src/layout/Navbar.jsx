@@ -4,6 +4,7 @@ import { DisplayControls } from "@/shared/components/DisplayControls";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("top");
   const progressRef = useRef(null);
 
   useEffect(() => {
@@ -30,6 +31,23 @@ export function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const sections = ["about", "projects", "skills", "journey", "contact"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -55%", threshold: [0, 0.2, 0.5] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
       className={`site-navbar fixed inset-x-0 top-0 z-[100] transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ${
@@ -50,34 +68,34 @@ export function Navbar() {
           ND<span className="text-accent">.</span>
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="navbar-links hidden items-center md:flex" aria-label="Primary navigation">
           <a
             href="#about"
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+            className={activeSection === "about" ? "is-active" : ""}
           >
             About
           </a>
           <a
             href="#projects"
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+            className={activeSection === "projects" ? "is-active" : ""}
           >
             Projects
           </a>
           <a
             href="#skills"
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+            className={activeSection === "skills" ? "is-active" : ""}
           >
             Skills
           </a>
           <a
             href="#journey"
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+            className={activeSection === "journey" ? "is-active" : ""}
           >
             Journey
           </a>
           <a
             href="#contact"
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+            className={activeSection === "contact" ? "is-active" : ""}
           >
             Contact
           </a>
