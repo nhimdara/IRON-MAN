@@ -130,4 +130,18 @@ export const projects = [
     githubUrl: "https://github.com/nhimdara/my_portfolio69",
     featured: false,
   },
+  {
+    id: 10,
+    title: "Campus Student Management System",
+    image: "/portfolio/projects/StudentManagementSystem.png",
+    description:
+      "A role-based student information system for managing students, courses, enrollments, scores, GPA calculations, and academic reports through a focused web dashboard and versioned REST API.",
+    tech: ["FastAPI", "SQLAlchemy", "Alembic", "Pydantic", "SQLite"],
+    category: "Full Stack",
+    year: "2026",
+    liveUrl: "https://student-management-system-kjf6.onrender.com/",
+    githubUrl:
+      "https://github.com/nhimdara/Final-Project-DSA-RUPP-ITE-Management-",
+    featured: true,
+  },
 ];

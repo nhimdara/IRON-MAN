@@ -104,7 +104,7 @@ export function PortfolioContent() {
             </p>
             <div className="about-numbers">
               <div>
-                <strong>7+</strong>
+                <strong>10</strong>
                 <span>Projects shipped</span>
               </div>
               <div>
