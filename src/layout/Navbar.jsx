@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react";
+import { DisplayControls } from "@/shared/components/DisplayControls";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,7 +38,7 @@ export function Navbar() {
           : "border-b border-white/[0.04] bg-black/15 backdrop-blur-sm"
       }`}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 md:px-8 md:py-5">
+      <div className="navbar-inner mx-auto max-w-[1400px] px-6 py-4 md:px-8 md:py-5">
         <a
           href="#top"
           className="flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-foreground"
@@ -82,9 +83,11 @@ export function Navbar() {
           </a>
         </nav>
 
+        <div className="nav-actions">
+          <DisplayControls />
         <a
           href="mailto:daracombodia54@gmail.com"
-          className="group inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.1] active:translate-y-[1px]"
+          className="talk-button group inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.1] active:translate-y-[1px]"
         >
           Let&apos;s talk
           <ArrowUpRight
@@ -93,6 +96,7 @@ export function Navbar() {
             className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           />
         </a>
+        </div>
       </div>
       <div className="nav-progress" aria-hidden="true">
         <span ref={progressRef} />

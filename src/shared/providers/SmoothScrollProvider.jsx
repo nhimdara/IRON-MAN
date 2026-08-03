@@ -5,16 +5,19 @@ export function SmoothScrollProvider({ children }) {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let dispose = () => {};
+    const setup = () => {
+      dispose();
+      if (document.documentElement.dataset.motion === "reduced") return;
 
-    const lenis = new Lenis({
+      const lenis = new Lenis({
       lerp: 0.1,
       duration: 1.2,
       smoothWheel: true,
       syncTouch: false,
       touchMultiplier: 1.1,
     });
-    lenisRef.current = lenis;
+      lenisRef.current = lenis;
 
     let rafId = null;
     const raf = (time) => {
@@ -33,14 +36,22 @@ export function SmoothScrollProvider({ children }) {
       else start();
     };
 
-    start();
-    document.addEventListener("visibilitychange", onVisibilityChange);
+      start();
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      dispose = () => {
+        stop();
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+        lenis.destroy();
+        lenisRef.current = null;
+      };
+    };
+
+    setup();
+    window.addEventListener("portfolio-motion-change", setup);
 
     return () => {
-      stop();
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-      lenis.destroy();
-      lenisRef.current = null;
+      window.removeEventListener("portfolio-motion-change", setup);
+      dispose();
     };
   }, []);
 
